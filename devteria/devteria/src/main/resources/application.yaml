@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /identity
+spring:
+  datasource:
+    # declade enviroment variable default
+    url: jdbc:mysql://localhost:3306/indentity_service
+    username: root
+    password: 123123za
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+
+  jpa:
+    #show-sql: true
+    hibernate:
+      ddl-auto: update
+jwt:
+  signerKey: "cub4Rn9DajJWCSTTuZ4VwWK2Nkl+EzMzCb9ooo8ZhGqlo2PlIN7fueT+b7GunCS3fio8u+MsngduMaeDBBPy9Q=="
+  valid-duration: 3600 #in second
+  refreshable-duaration: 36000 #in second
+app:
+  service:
+    profile: http://localhost:8081/profile
+
+
