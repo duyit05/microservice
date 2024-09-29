@@ -1,6 +1,7 @@
 package com.microservices.profileuser.controller;
 
 import com.microservices.profileuser.dto.request.UserRequest;
+import com.microservices.profileuser.dto.response.ApiResponse;
 import com.microservices.profileuser.dto.response.UserReponse;
 import com.microservices.profileuser.service.UserProfileService;
 import lombok.AccessLevel;
@@ -23,23 +24,25 @@ public class UserProfileController {
     }
 
     @GetMapping("/user/{userProfileId}")
-    public UserReponse getProfileById( @PathVariable String userProfileId) {
-       return userProfileService.getUserProfileById(userProfileId);
+    public UserReponse getProfileById(@PathVariable String userProfileId) {
+        return userProfileService.getUserProfileById(userProfileId);
     }
 
     @DeleteMapping("/user/{userProfileId}")
-    public String deleteUserProfileById (@PathVariable String userProfileId){
+    public String deleteUserProfileById(@PathVariable String userProfileId) {
         userProfileService.deleteUserProfileById(userProfileId);
         return "User profile has been deleted";
     }
 
     @PutMapping("/user/{userProfileId}")
-    public UserReponse updateUserProfileById (@PathVariable String userProfileId , @RequestBody UserRequest request){
-        return userProfileService.updateUserProfileById(userProfileId , request);
+    public UserReponse updateUserProfileById(@PathVariable String userProfileId, @RequestBody UserRequest request) {
+        return userProfileService.updateUserProfileById(userProfileId, request);
     }
 
     @GetMapping("/users")
-    public List<UserReponse> getAllUserReponse (){
-        return userProfileService.getAllUserResponse();
+    public ApiResponse<List<UserReponse>> getAllUserReponse() {
+        return ApiResponse.<List<UserReponse>>builder()
+                .result(userProfileService.getAllUsers())
+                .build();
     }
 }

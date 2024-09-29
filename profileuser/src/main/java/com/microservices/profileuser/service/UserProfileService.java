@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.Mapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,7 +49,8 @@ public class UserProfileService {
         return userProfileMapper.toUserResponse(userProfileRepository.save(userProfile));
     }
 
-    public List<UserReponse> getAllUserResponse (){
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserReponse> getAllUsers (){
         return userProfileRepository.findAll().stream().map(userProfileMapper :: toUserResponse).collect(Collectors.toList());
     }
 }
