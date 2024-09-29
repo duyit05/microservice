@@ -22,7 +22,7 @@ public class SecutiryConfig {
     private CustomJwtDecoder customJwtDecoder;
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/users/registration", "/auth/log-in", "/auth/introspect", "auth/log-out", "/auth/refresh"
+            "/internal/users"
     };
 
     @Bean

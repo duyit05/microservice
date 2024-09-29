@@ -1,7 +1,7 @@
 package com.microservices.profileuser.service;
 
-import com.microservices.profileuser.dto.request.UserRequest;
-import com.microservices.profileuser.dto.response.UserReponse;
+import com.microservices.profileuser.dto.request.UserProfileRequest;
+import com.microservices.profileuser.dto.response.UserProfileResponse;
 import com.microservices.profileuser.entity.UserProfile;
 import com.microservices.profileuser.mapper.UserProfileMapper;
 import com.microservices.profileuser.repository.UserProfileRepository;
@@ -25,14 +25,14 @@ public class UserProfileService {
     UserProfileRepository userProfileRepository;
     UserProfileMapper userProfileMapper;
 
-    public UserReponse createUserProfile(UserRequest request) {
+    public UserProfileResponse createUserProfile(UserProfileRequest request) {
 
         UserProfile userProfile = userProfileMapper.toUserProfile(request);
         userProfile = userProfileRepository.save(userProfile);
         return userProfileMapper.toUserResponse(userProfile);
     }
 
-    public UserReponse getUserProfileById (String id) {
+    public UserProfileResponse getUserProfileById (String id) {
         UserProfile userProfile = userProfileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile not found"));
         return userProfileMapper.toUserResponse(userProfile);
     }
@@ -42,7 +42,7 @@ public class UserProfileService {
         userProfileRepository.delete(userProfile);
     }
 
-    public UserReponse updateUserProfileById (String id , UserRequest request){
+    public UserProfileResponse updateUserProfileById (String id , UserProfileRequest request){
         UserProfile userProfile = userProfileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile not found"));
         userProfileMapper.updateUserProfile(userProfile , request);
 
@@ -50,7 +50,7 @@ public class UserProfileService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UserReponse> getAllUsers (){
+    public List<UserProfileResponse> getAllUsers (){
         return userProfileRepository.findAll().stream().map(userProfileMapper :: toUserResponse).collect(Collectors.toList());
     }
 }

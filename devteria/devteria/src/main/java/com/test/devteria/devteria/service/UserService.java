@@ -22,6 +22,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.HashSet;
 import java.util.List;
@@ -49,8 +51,8 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         // FIND ROLE DEFAULT IS USER
-                Role roleDefault = roleRepository.findById("USER").orElseThrow(() -> new
-         AppException(ErrorCode.ROLE_NOT_FOUND));
+        Role roleDefault = roleRepository.findById("USER").orElseThrow(() -> new
+                AppException(ErrorCode.ROLE_NOT_FOUND));
 
         // CREATE SET AFTER ADD ROLE
         Set<Role> roles = new HashSet<>();
@@ -61,10 +63,11 @@ public class UserService {
         user = userRepository.save(user);
 
 
-       var profileRequest =   profileMapper.toUserProfileRequest(request);
-       profileRequest.setUserId(user.getId());
+        var profileRequest = profileMapper.toUserProfileRequest(request);
+        profileRequest.setUserId(user.getId());
 
-      profileClient.createUserProfile(profileRequest);
+
+        profileClient.createUserProfile(profileRequest);
 
         return userMapper.toUserResponse(user);
     }
@@ -80,7 +83,7 @@ public class UserService {
     }
 
     @PostAuthorize("returnObject.username == authentication.name")
-    // CHECK USER LOGIN CORRECT WITH USERNAME LOGINING OR NOT IF CORRECT CAN CALL FUNCTION GET DETAIL INFORMATION
+    // CHECK USER LOGIN CORRECT WITH USERNAME LOGING OR NOT IF CORRECT CAN CALL FUNCTION GET DETAIL INFORMATION
     // CALL FUNCTION BEFORE AFTER CHECK ROLE
     public UserRespone getUser(String id) {
         log.info("In method get user by id");

@@ -1,8 +1,8 @@
 package com.microservices.profileuser.controller;
 
-import com.microservices.profileuser.dto.request.UserRequest;
+import com.microservices.profileuser.dto.request.UserProfileRequest;
 import com.microservices.profileuser.dto.response.ApiResponse;
-import com.microservices.profileuser.dto.response.UserReponse;
+import com.microservices.profileuser.dto.response.UserProfileResponse;
 import com.microservices.profileuser.service.UserProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +19,12 @@ public class UserProfileController {
     UserProfileService userProfileService;
 
     @PostMapping("/users")
-    public UserReponse createUserProfile(@RequestBody UserRequest request) {
+    public UserProfileResponse createUserProfile(@RequestBody UserProfileRequest request) {
         return userProfileService.createUserProfile(request);
     }
 
     @GetMapping("/user/{userProfileId}")
-    public UserReponse getProfileById(@PathVariable String userProfileId) {
+    public UserProfileResponse getProfileById(@PathVariable String userProfileId) {
         return userProfileService.getUserProfileById(userProfileId);
     }
 
@@ -35,13 +35,13 @@ public class UserProfileController {
     }
 
     @PutMapping("/user/{userProfileId}")
-    public UserReponse updateUserProfileById(@PathVariable String userProfileId, @RequestBody UserRequest request) {
+    public UserProfileResponse updateUserProfileById(@PathVariable String userProfileId, @RequestBody UserProfileRequest request) {
         return userProfileService.updateUserProfileById(userProfileId, request);
     }
 
     @GetMapping("/users")
-    public ApiResponse<List<UserReponse>> getAllUserReponse() {
-        return ApiResponse.<List<UserReponse>>builder()
+    public ApiResponse<List<UserProfileResponse>> getAllUserReponse() {
+        return ApiResponse.<List<UserProfileResponse>>builder()
                 .result(userProfileService.getAllUsers())
                 .build();
     }
