@@ -63,7 +63,7 @@ public class UserController {
         return "User has been deleted";
     }
 
-    @GetMapping("/myInfo")
+    @GetMapping("/my-info")
     public ApiRespone<UserRespone> getMyInfo() {
         return ApiRespone.<UserRespone>builder().result(userService.getMyInfo()).build();
     }

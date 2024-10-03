@@ -56,17 +56,17 @@ public class UserServiceTest {
         respone = UserRespone.builder()
                 .id("7eab3d21055c")
                 .username("john")
-                .firstName("John")
-                .lastName("Doe")
-                .dob(dob)
+//                .firstName("John")
+//                .lastName("Doe")
+//                .dob(dob)
                 .build();
 
         user = User.builder()
                 .id("7eab3d21055c")
                 .username("john")
-                .firstName("John")
-                .lastName("Doe")
-                .dob(dob)
+//                .firstName("John")
+//                .lastName("Doe")
+//                .dob(dob)
                 .build();
     }
 
